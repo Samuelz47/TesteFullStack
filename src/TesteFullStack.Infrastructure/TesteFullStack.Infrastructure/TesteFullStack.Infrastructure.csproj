@@ -6,4 +6,12 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.5" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\TesteFullStack.Domain\TesteFullStack.Domain\TesteFullStack.Domain.csproj" />
+    </ItemGroup>
+
 </Project>
