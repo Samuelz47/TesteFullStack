@@ -8,6 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="AutoMapper" Version="16.1.1" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.0"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.5" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.5">
@@ -18,9 +19,11 @@
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="10.1.7" />
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\TesteFullStack.Application\TesteFullStack.Application\TesteFullStack.Application.csproj" />
         <ProjectReference Include="..\..\TesteFullStack.Infrastructure\TesteFullStack.Infrastructure\TesteFullStack.Infrastructure.csproj" />
     </ItemGroup>
 
