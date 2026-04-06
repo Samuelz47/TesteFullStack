@@ -6,7 +6,7 @@ using TesteFullStack.Domain.Entities;
 namespace TesteFullStack.API.Controllers;
 [Route("[controller]")]
 [ApiController]
-public class PessoaController : Controller
+public class PessoaController : ControllerBase
 {
     private readonly IPessoaService _pessoaService;
 
@@ -15,7 +15,7 @@ public class PessoaController : Controller
         _pessoaService = pessoaService;
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("{id}", Name = "GetPessoabyId")]
     public async Task<IActionResult> GetAsync(Guid id)
     {
         var pessoa = await _pessoaService.GetbyIdAsync(id);
@@ -26,14 +26,14 @@ public class PessoaController : Controller
     [HttpGet]
     public async Task<IActionResult> GetAllAsync()
     {
-        var pessoas = _pessoaService.GetAllAsync();
+        var pessoas = await _pessoaService.GetAllAsync();
         return Ok(pessoas);
     }
 
     [HttpGet("transacoes")]
     public async Task<IActionResult> GetAllWithTransacoesAsync()
     {
-        var pessoas = _pessoaService.GetAllWithTransacoesAsync();
+        var pessoas = await _pessoaService.GetAllWithTransacoesAsync();
         return Ok(pessoas);
     }
 
@@ -42,10 +42,10 @@ public class PessoaController : Controller
     {
         var pessoa = await _pessoaService.CreateAsync(dto); 
         if (!pessoa.IsSuccess) return BadRequest(pessoa.Message);
-        return CreatedAtAction(nameof(GetAsync), new { id = pessoa.Data.Id }, pessoa);
+        return CreatedAtRoute("GetPessoabyId", new { id = pessoa.Data.Id }, pessoa.Data);
     }
 
-    [HttpPut("{id}/update")]
+    [HttpPut("{id}")]
     public async Task<IActionResult> PutAsync(Guid id, [FromBody] PessoaForRegistrationDTO dto)
     {
         var pessoa = await _pessoaService.UpdateAsync(id, dto);
@@ -53,7 +53,7 @@ public class PessoaController : Controller
         return Ok(pessoa.Data);
     }
 
-    [HttpDelete("{id}/delete")]
+    [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteAsync(Guid id)
     {
         var pessoa = await _pessoaService.DeleteAsync(id);

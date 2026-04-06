@@ -6,7 +6,7 @@ using TesteFullStack.Application.Interfaces;
 namespace TesteFullStack.API.Controllers;
 [Route("[controller]")]
 [ApiController]
-public class CategoriaController : Controller
+public class CategoriaController : ControllerBase
 {
     private readonly ICategoriaService _categoriaService;
 
@@ -27,10 +27,10 @@ public class CategoriaController : Controller
     {
         var categoria = await _categoriaService.CreateCategoriaAsync(dto);
         if (!categoria.IsSuccess) return BadRequest(categoria.Message);
-        return CreatedAtAction(nameof(GetAsync), new { id = categoria.Data.Id }, categoria);
+        return CreatedAtRoute("GetCategoriaById", new { id = categoria.Data.Id }, categoria.Data);
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("{id}",  Name = "GetCategoriaById")]
     public async Task<IActionResult> GetAsync(Guid id)
     {
         var categoria = await _categoriaService.GetbyIdAsync(id);
