@@ -491,6 +491,7 @@ dist/
 build/
 .env
 
+
 # =========================
 # JetBrains Rider (IDE)
 # =========================
@@ -501,3 +502,6 @@ build/
 # macOS
 # =========================
 .DS_Store
+
+# Ignorar arquivos de prompts e agentes de IA
+agents/
