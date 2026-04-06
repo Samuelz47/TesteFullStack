@@ -1,5 +1,5 @@
 export interface Pessoa {
-    id?: number;
+    id?: string;
     nome: string;
-    // Add other required fields corresponding to the C# backend Pessoa entity
+    idade: number;
 }

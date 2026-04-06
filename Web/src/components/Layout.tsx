@@ -3,6 +3,7 @@ import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/s
 import { Button } from "@/components/ui/button"
 import { LayoutDashboard, Users, Tags, ArrowRightLeft, Menu } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { Toaster } from "@/components/ui/sonner"
 
 const navigation = [
     { name: 'Dashboard', href: '/', icon: LayoutDashboard },
@@ -86,6 +87,7 @@ export function Layout() {
                     </div>
                 </main>
             </div>
+            <Toaster />
         </div>
     )
 }

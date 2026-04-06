@@ -4,7 +4,7 @@ using TesteFullStack.Application.Interfaces;
 using TesteFullStack.Domain.Entities;
 
 namespace TesteFullStack.API.Controllers;
-[Route("[controller]")]
+[Route("api/pessoas")]
 [ApiController]
 public class PessoaController : ControllerBase
 {

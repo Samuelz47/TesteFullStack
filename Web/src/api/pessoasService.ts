@@ -6,7 +6,7 @@ export const pessoasService = {
         const { data } = await axiosClient.get<Pessoa[]>('/pessoas');
         return data;
     },
-    getById: async (id: number) => {
+    getById: async (id: string) => {
         const { data } = await axiosClient.get<Pessoa>(`/pessoas/${id}`);
         return data;
     },
@@ -14,11 +14,11 @@ export const pessoasService = {
         const { data } = await axiosClient.post<Pessoa>('/pessoas', pessoa);
         return data;
     },
-    update: async (id: number, pessoa: Pessoa) => {
+    update: async (id: string, pessoa: Pessoa) => {
         const { data } = await axiosClient.put<Pessoa>(`/pessoas/${id}`, pessoa);
         return data;
     },
-    delete: async (id: number) => {
+    delete: async (id: string) => {
         const { data } = await axiosClient.delete(`/pessoas/${id}`);
         return data;
     }

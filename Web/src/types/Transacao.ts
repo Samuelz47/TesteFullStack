@@ -4,11 +4,11 @@ export enum TipoTransacao {
 }
 
 export interface Transacao {
-    id?: number;
+    id?: string;
     descricao: string;
     valor: number;
     data: string; // ISO date string from C#
     tipo: TipoTransacao;
-    categoriaId?: number;
-    pessoaId?: number;
+    categoriaId?: string;
+    pessoaId?: string;
 }

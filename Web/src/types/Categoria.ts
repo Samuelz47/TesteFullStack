@@ -5,7 +5,7 @@ export enum FinalidadeCategoria {
 }
 
 export interface Categoria {
-    id?: number;
+    id?: string;
     nome: string;
     finalidade: FinalidadeCategoria;
 }

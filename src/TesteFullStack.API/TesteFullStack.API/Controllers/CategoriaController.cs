@@ -4,7 +4,7 @@ using TesteFullStack.Application.DTOs;
 using TesteFullStack.Application.Interfaces;
 
 namespace TesteFullStack.API.Controllers;
-[Route("[controller]")]
+[Route("api/categorias")]
 [ApiController]
 public class CategoriaController : ControllerBase
 {

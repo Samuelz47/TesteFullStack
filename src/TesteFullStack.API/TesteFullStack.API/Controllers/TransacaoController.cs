@@ -3,7 +3,7 @@ using TesteFullStack.Application.DTOs;
 using TesteFullStack.Application.Interfaces;
 
 namespace TesteFullStack.API.Controllers;
-[Route("[controller]")]
+[Route("api/transacoes")]
 [ApiController]
 public class TransacaoController : ControllerBase
 {

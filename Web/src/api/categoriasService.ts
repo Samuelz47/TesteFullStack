@@ -6,7 +6,7 @@ export const categoriasService = {
         const { data } = await axiosClient.get<Categoria[]>('/categorias');
         return data;
     },
-    getById: async (id: number) => {
+    getById: async (id: string) => {
         const { data } = await axiosClient.get<Categoria>(`/categorias/${id}`);
         return data;
     },
@@ -14,11 +14,11 @@ export const categoriasService = {
         const { data } = await axiosClient.post<Categoria>('/categorias', categoria);
         return data;
     },
-    update: async (id: number, categoria: Categoria) => {
+    update: async (id: string, categoria: Categoria) => {
         const { data } = await axiosClient.put<Categoria>(`/categorias/${id}`, categoria);
         return data;
     },
-    delete: async (id: number) => {
+    delete: async (id: string) => {
         const { data } = await axiosClient.delete(`/categorias/${id}`);
         return data;
     }

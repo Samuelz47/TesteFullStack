@@ -69,9 +69,22 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
     };
 });
 
+// 8. CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 // PIPELINE DE EXECUÇÃO (Middlewares)
 
 var app = builder.Build();
+
+app.UseCors("AllowAll");
 
 if (app.Environment.IsDevelopment())
 {
