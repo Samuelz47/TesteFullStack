@@ -1,11 +1,11 @@
 export enum FinalidadeCategoria {
-    Despesa = 0,
-    Receita = 1,
-    Ambas = 2
+    Despesa = "Despesa",
+    Receita = "Receita",
+    Ambas = "Ambas"
 }
 
 export interface Categoria {
     id?: string;
-    nome: string;
+    descricao: string;
     finalidade: FinalidadeCategoria;
 }
