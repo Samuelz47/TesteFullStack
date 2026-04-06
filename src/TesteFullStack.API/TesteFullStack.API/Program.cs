@@ -1,8 +1,12 @@
 using System.Text.Json.Serialization;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TesteFullStack.Application.Interfaces;
 using TesteFullStack.Application.Mappings;
 using TesteFullStack.Application.Services;
+using TesteFullStack.Application.Validators;
 using TesteFullStack.Domain.Interfaces;
 using TesteFullStack.Infrastructure.DbContext;
 using TesteFullStack.Infrastructure.Repositories;
@@ -32,14 +36,42 @@ builder.Services.AddControllers()
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
 
-// 5. O SEGREDO DO .NET 10: Adiciona o gerador nativo do OpenAPI
+// 5. Adiciona o gerador nativo do OpenAPI
 builder.Services.AddOpenApi(); 
 
-var app = builder.Build();
+// 6. Habilita a validação automática para não precisar ficar chamando manualmente nos Controllers
+builder.Services.AddFluentValidationAutoValidation()
+    .AddFluentValidationClientsideAdapters();
 
-// ==========================================
+builder.Services.AddValidatorsFromAssemblyContaining<PessoaValidator>();
+
+// 7. CUSTOMIZAÇÃO DO ERRO 400
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.InvalidModelStateResponseFactory = context =>
+    {
+        // Pega as mensagens de erro que o FluentValidation gerou
+        var erros = context.ModelState
+            .Where(e => e.Value.Errors.Count > 0)
+            .SelectMany(x => x.Value.Errors)
+            .Select(x => x.ErrorMessage)
+            .ToList();
+
+        // Formata para o Front
+        var respostaBonita = new
+        {
+            Sucesso = false,
+            Mensagem = "Encontramos alguns erros nos dados enviados.",
+            Erros = erros
+        };
+
+        return new BadRequestObjectResult(respostaBonita);
+    };
+});
+
 // PIPELINE DE EXECUÇÃO (Middlewares)
-// ==========================================
+
+var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
@@ -56,7 +88,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-// Mapeia os endpoints criados nos seus Controllers
+// Mapeia os endpoints dos Controllers
 app.MapControllers(); 
 
 app.Run();
