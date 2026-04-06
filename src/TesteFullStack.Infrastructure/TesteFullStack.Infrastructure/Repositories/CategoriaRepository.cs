@@ -21,6 +21,11 @@ public class CategoriaRepository : ICategoriaRepository
 
     public async Task<List<Categoria>> GetAllAsync()
     {
-        return await _context.Categorias.ToListAsync();
+        return await _context.Categorias.AsNoTracking().ToListAsync();
+    }
+    
+    public async Task<Categoria?> GetByIdAsync(Guid id)
+    {
+        return await _context.Categorias.FindAsync(id);
     }
 }

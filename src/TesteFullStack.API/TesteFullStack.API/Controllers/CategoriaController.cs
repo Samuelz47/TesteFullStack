@@ -26,7 +26,15 @@ public class CategoriaController : Controller
     public async Task<IActionResult> CreateCategoriaAsync([FromBody] CategoriaForRegistrationDTO dto)
     {
         var categoria = await _categoriaService.CreateCategoriaAsync(dto);
-        if (categoria is null) return BadRequest(new { error = "Erro ao criar categoria" });
-        return StatusCode(201, categoria);
+        if (!categoria.IsSuccess) return BadRequest(categoria.Message);
+        return CreatedAtAction(nameof(GetAsync), new { id = categoria.Data.Id }, categoria);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetAsync(Guid id)
+    {
+        var categoria = await _categoriaService.GetbyIdAsync(id);
+        if (!categoria.IsSuccess) return NotFound(categoria.Message);
+        return Ok(categoria.Data);
     }
 }

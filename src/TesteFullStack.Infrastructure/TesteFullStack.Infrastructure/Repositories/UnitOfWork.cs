@@ -8,13 +8,15 @@ public class UnitOfWork : IUnitOfWork
     private readonly AppDbContext _context;
     
     public ICategoriaRepository Categorias { get; }
-    // public IPessoaRepository Pessoas { get; }
-    // public ITransacaoRepository Transacoes { get; }
+    public IPessoaRepository Pessoas { get; }
+    public ITransacaoRepository Transacoes { get; }
     
     public UnitOfWork(AppDbContext context)
     {
         _context = context;
         Categorias = new CategoriaRepository(_context);
+        Pessoas = new PessoaRepository(_context);
+        Transacoes = new TransacaoRepository(_context);
     }
     
     public async Task<bool> CommitAsync()

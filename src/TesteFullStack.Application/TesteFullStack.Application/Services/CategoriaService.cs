@@ -1,4 +1,5 @@
 using AutoMapper;
+using TesteFullStack.Application.Common;
 using TesteFullStack.Application.DTOs;
 using TesteFullStack.Application.Interfaces;
 using TesteFullStack.Domain.Entities;
@@ -17,7 +18,7 @@ public class CategoriaService : ICategoriaService
         _mapper = mapper;
     }
 
-    public async Task<CategoriaDTO> CreateCategoriaAsync(CategoriaForRegistrationDTO dto)
+    public async Task<Result<CategoriaDTO>> CreateCategoriaAsync(CategoriaForRegistrationDTO dto)
     {
         var categoria = _mapper.Map<Categoria>(dto);
         
@@ -26,15 +27,25 @@ public class CategoriaService : ICategoriaService
 
         if (!sucess)
         {
-            throw new Exception("Erro ao criar Categoria");
+            return Result<CategoriaDTO>.Failure("Erro ao criar categoria");
         }
         
-        return _mapper.Map<CategoriaDTO>(categoria);
+        var categoriaDto = _mapper.Map<CategoriaDTO>(categoria);
+        return Result<CategoriaDTO>.Success(categoriaDto);
     }
 
     public async Task<IEnumerable<CategoriaDTO>> GetAllCategoriasAsync()
     {
         var categorias = await _uow.Categorias.GetAllAsync();
         return _mapper.Map<IEnumerable<CategoriaDTO>>(categorias);
+    }
+    
+    public async Task<Result<CategoriaDTO>> GetbyIdAsync(Guid id)
+    {
+        var categoria = await _uow.Categorias.GetByIdAsync(id);
+        if (categoria is null) return Result<CategoriaDTO>.Failure("Categoria não encontrada");
+        
+        var categoriaDto = _mapper.Map<CategoriaDTO>(categoria);
+        return Result<CategoriaDTO>.Success(categoriaDto);
     }
 }

@@ -16,7 +16,11 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 // 2. Injeção de Dependências
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
+builder.Services.AddScoped<IPessoaRepository, PessoaRepository>();
+builder.Services.AddScoped<ITransacaoRepository, TransacaoRepository>();
 builder.Services.AddScoped<ICategoriaService, CategoriaService>();
+builder.Services.AddScoped<IPessoaService, PessoaService>();
+builder.Services.AddScoped<ITransacaoService, TransacaoService>();
 
 // 3. AutoMapper
 builder.Services.AddAutoMapper(_ => { }, typeof(CategoriaMappingProfile).Assembly);
